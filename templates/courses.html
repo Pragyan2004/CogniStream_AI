@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Courses - CogniStream AI{% endblock %}
+
+{% block content %}
+<div class="py-20 bg-slate-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-20 animate-fade-in">
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Curated Learning <span
+                    class="gradient-text">Paths</span></h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto">Skip the search and dive straight into high-quality,
+                pre-structured courses for the most in-demand skills.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for course in courses %}
+            <a href="{{ url_for('course_detail', course_id=course.id) }}"
+                class="group bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 block">
+                <div
+                    class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    {{ course.icon }}
+                </div>
+                <div class="mb-6">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span
+                            class="px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-full uppercase tracking-wider">{{
+                            course.level }}</span>
+                        <span
+                            class="px-3 py-1 bg-slate-100 text-slate-500 text-xs font-bold rounded-full uppercase tracking-wider">{{
+                            course.duration }}</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{{
+                        course.title }}</h2>
+                </div>
+                <p class="text-slate-500 mb-10 leading-relaxed">{{ course.description }}</p>
+                <div class="flex items-center justify-between group-hover:text-indigo-600 font-bold">
+                    <span>Explore Course</span>
+                    <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="mt-20 text-center">
+            <div class="bg-indigo-50 inline-block px-10 py-8 rounded-[2rem] border border-indigo-100">
+                <p class="text-indigo-900 font-bold mb-4">Don't see what you're looking for?</p>
+                <a href="{{ url_for('learn') }}"
+                    class="btn-primary text-white px-8 py-3 rounded-xl font-bold inline-block">Use CogniStream AI to
+                    build
+                    a custom path</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

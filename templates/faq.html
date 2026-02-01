@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - CogniStream AI{% endblock %}
+
+{% block content %}
+<div class="py-20 bg-slate-50 min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold mb-4 gradient-text">Frequently Asked Questions</h1>
+            <p class="text-lg text-slate-600">Everything you need to know about CogniStream AI.</p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition">
+                <h3 class="text-xl font-bold text-slate-900 mb-3">How does CogniStream AI work?</h3>
+                <p class="text-slate-600 leading-relaxed">Our system uses the Llama 3 architecture powered by Groq's
+                    high-speed inference engine. It analyzes your queries and generates structured learning materials
+                    including roadmaps, resources, and exercises.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition">
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Is the content always accurate?</h3>
+                <p class="text-slate-600 leading-relaxed">While our AI models are highly advanced and trained on vast
+                    datasets, they can occasionally produce inaccuracies. We recommend cross-referencing critical
+                    information with the curated resources provided in the librarian tab.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition">
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Can I save my learning progress?</h3>
+                <p class="text-slate-600 leading-relaxed">Currently, the public version allows you to generate and view
+                    materials. Registered users can save their roadmaps and chat history to their profiles for future
+                    reference.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition">
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Is it free to use?</h3>
+                <p class="text-slate-600 leading-relaxed">Yes, the basic AI learning features are free to use. We aim to
+                    keep core educational tools accessible to everyone.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition">
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Which subjects are supported?</h3>
+                <p class="text-slate-600 leading-relaxed">The AI is capable of teaching almost any academic or technical
+                    subject, from quantum physics and advanced mathematics to coding, history, and literature.</p>
+            </div>
+        </div>
+
+        <div class="mt-16 bg-indigo-600 rounded-3xl p-10 text-center text-white">
+            <h2 class="text-2xl font-bold mb-4">Still have questions?</h2>
+            <p class="mb-8 opacity-90">We're here to help you on your learning journey.</p>
+            <a href="{{ url_for('contact') }}"
+                class="bg-white text-indigo-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-100 transition inline-block">Contact
+                Support</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}CogniStream AI - {{ topic if topic else 'Lab' }}{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-slate-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Search Header -->
+        <div class="bg-white rounded-[2.5rem] p-10 shadow-xl border border-slate-100 mb-12 animate-fade-in">
+            <div class="max-w-3xl mx-auto text-center space-y-6">
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">AI Learning <span
+                        class="gradient-text">Lab</span></h1>
+                <p class="text-slate-500 mb-8">What do you want to master today? Describe your topic in detail.</p>
+
+                <form id="analyzeForm" action="{{ url_for('learn') }}" method="POST" class="relative group">
+                    <input type="text" name="topic" id="topicInput" value="{{ topic if topic else '' }}"
+                        placeholder="e.g., Quantum Computing for Beginners, React Server Components..."
+                        class="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100 transition-all outline-none text-lg font-medium shadow-inner placeholder-slate-400"
+                        required>
+                    <button type="submit" id="submitBtn"
+                        class="absolute right-3 top-3 bottom-3 px-8 bg-indigo-600 text-white rounded-xl font-bold hover:bg-slate-900 transition-all flex items-center space-x-2">
+                        <span id="btnText">Analyze</span>
+                        <i id="btnIcon" class="fas fa-sparkles"></i>
+                    </button>
+                </form>
+
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="hidden mt-12 animate-fade-in">
+                    <div class="bg-indigo-50/50 rounded-3xl p-12 border-2 border-dashed border-indigo-200">
+                        <div class="relative w-24 h-24 mx-auto mb-8">
+                            <div class="absolute inset-0 bg-indigo-600 rounded-full animate-ping opacity-20"></div>
+                            <div
+                                class="relative bg-white w-24 h-24 rounded-full shadow-xl flex items-center justify-center border border-indigo-100">
+                                <i class="fas fa-brain text-4xl text-indigo-600 animate-bounce"></i>
+                            </div>
+                        </div>
+                        <h3 id="loadingText" class="text-2xl font-bold text-slate-800 mb-2">Analyzing your request...
+                        </h3>
+                        <p id="loadingSubtext" class="text-slate-500 font-medium">Our AI Professor is preparing the
+                            curriculum</p>
+
+                        <div class="max-w-md mx-auto mt-8">
+                            <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-600 rounded-full animate-progress" style="width: 30%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if responses %}
+        <!-- Results Dashboard -->
+        <div class="space-y-12 animate-fade-in-up">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-200 pb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Learning Insights for <span
+                            class="text-indigo-600">"{{ topic }}"</span></h2>
+                    <p class="text-slate-500 mt-2">Generated using Llama 3 Hybrid Intelligence</p>
+                </div>
+                <!-- Nav Tabs -->
+                <div class="flex bg-slate-200/50 p-1.5 rounded-2xl gap-2 overflow-x-auto">
+                    <button onclick="switchTab('professor')" id="tab-professor"
+                        class="tab-btn active px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Professor</button>
+                    <button onclick="switchTab('advisor')" id="tab-advisor"
+                        class="tab-btn px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-500 hover:text-slate-700">Advisor</button>
+                    <button onclick="switchTab('librarian')" id="tab-librarian"
+                        class="tab-btn px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-500 hover:text-slate-700">Librarian</button>
+                    <button onclick="switchTab('assistant')" id="tab-assistant"
+                        class="tab-btn px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-500 hover:text-slate-700">Workshop</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Main Content Area -->
+                <div class="lg:col-span-8">
+                    {% for role, html_content in responses.items() %}
+                    <div id="content-{{ role }}"
+                        class="response-content {% if loop.index > 1 %}hidden{% endif %} bg-white rounded-3xl p-10 shadow-lg border border-slate-100 min-h-[600px]">
+                        <div
+                            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-indigo-600 prose-pre:bg-slate-900 prose-pre:rounded-2xl">
+                            {{ html_content | safe }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Sidebar Utility -->
+                <div class="lg:col-span-4 space-y-8">
+                    <div
+                        class="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-200 relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
+                            <div class="space-y-4">
+                                <button onclick="window.print()"
+                                    class="w-full bg-white/10 hover:bg-white/20 px-6 py-4 rounded-xl flex items-center justify-between transition-colors font-bold">
+                                    <span>Export as PDF</span>
+                                    <i class="fas fa-file-pdf"></i>
+                                </button>
+                                <button onclick="shareLink()"
+                                    class="w-full bg-white/10 hover:bg-white/20 px-6 py-4 rounded-xl flex items-center justify-between transition-colors font-bold">
+                                    <span>Share Link</span>
+                                    <i class="fas fa-share-nodes"></i>
+                                </button>
+                                <button onclick="saveToProfile()"
+                                    class="w-full bg-emerald-500 hover:bg-emerald-600 px-6 py-4 rounded-xl flex items-center justify-between transition-colors font-bold">
+                                    <span>Save to History</span>
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <i class="fas fa-brain absolute -bottom-10 -right-10 text-[12rem] opacity-10"></i>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg">
+                        <h3 class="text-lg font-bold text-slate-900 mb-6">Learning Metrics</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-500 font-medium">Concept Depth</span>
+                                    <span class="text-indigo-600 font-bold">85%</span>
+                                </div>
+                                <div class="h-2 bg-slate-100 rounded-full">
+                                    <div class="w-[85%] h-full bg-indigo-600 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-500 font-medium">Complexity Level</span>
+                                    <span class="text-amber-600 font-bold">Intermediate</span>
+                                </div>
+                                <div class="h-2 bg-slate-100 rounded-full">
+                                    <div class="w-[60%] h-full bg-amber-500 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif topic %}
+        <!-- Loading State simulated if post request but no response yet (unlikely with this setup but good for UX) -->
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .tab-btn.active {
+        background-color: white;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        color: #4f46e5;
+        /* indigo-600 */
+    }
+
+    .response-content {
+        animation: slide-up 0.4s ease-out;
+    }
+
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes progress {
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+    }
+
+    .animate-progress {
+        animation: progress 8s ease-in-out infinite;
+    }
+</style>
+
+<script>
+    const form = document.getElementById('analyzeForm');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnIcon = document.getElementById('btnIcon');
+    const loadingText = document.getElementById('loadingText');
+    const loadingSubtext = document.getElementById('loadingSubtext');
+
+    const loadingMessages = [
+        { text: "Analyzing your request...", sub: "Consulting with our AI Professor" },
+        { text: "Curating high-quality resources...", sub: "Our Librarian is checking the knowledge vault" },
+        { text: "Designing your learning path...", sub: "The Study Advisor is mapping milestones" },
+        { text: "Building practical exercises...", sub: "Preparing hands-on workshop materials" },
+        { text: "Polishing your roadmap...", sub: "Applying pedagogical framework" }
+    ];
+
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            // Show loading state
+            loadingOverlay.classList.remove('hidden');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            btnText.innerText = "Processing...";
+            btnIcon.className = "fas fa-spinner fa-spin";
+
+            // Cycle through loading messages
+            let msgIndex = 0;
+            setInterval(() => {
+                msgIndex = (msgIndex + 1) % loadingMessages.length;
+                loadingText.innerText = loadingMessages[msgIndex].text;
+                loadingSubtext.innerText = loadingMessages[msgIndex].sub;
+            }, 2500);
+
+            // Hide previous results if any
+            const results = document.querySelector('.animate-fade-in-up');
+            if (results) results.classList.add('opacity-20', 'pointer-events-none');
+        });
+    }
+
+    function switchTab(role) {
+        // Hide all contents
+        document.querySelectorAll('.response-content').forEach(el => el.classList.add('hidden'));
+        // Show selected content
+        document.getElementById('content-' + role).classList.remove('hidden');
+
+        // Update tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active', 'bg-white', 'shadow-md', 'text-indigo-600');
+            btn.classList.add('text-slate-500');
+        });
+
+        const activeBtn = document.getElementById('tab-' + role);
+        activeBtn.classList.remove('text-slate-500');
+        activeBtn.classList.add('active', 'bg-white', 'shadow-md', 'text-indigo-600');
+    }
+
+    function shareLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+    }
+
+    function saveToProfile() {
+        alert('Register an account to save to history!');
+    }
+</script>
+{% endblock %}

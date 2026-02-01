@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - CogniStream AI{% endblock %}
+
+{% block content %}
+<div class="relative overflow-hidden py-20">
+    <div class="absolute top-0 left-0 w-full h-full bg-slate-50 -z-10"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-50"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-20 animate-fade-in-up">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
+                Reimagining <span class="gradient-text">Education</span> with AI
+            </h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                We're on a mission to democratize learning through advanced artificial intelligence. Our platform
+                provides personalized, high-quality educational experiences to anyone, anywhere.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
+            <div class="space-y-8">
+                <div
+                    class="inline-flex items-center space-x-2 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-semibold text-sm">
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                    </span>
+                    <span>Our Evolution</span>
+                </div>
+                <h2 class="text-4xl font-bold text-slate-900 leading-tight">Born from a vision, powered by Intelligence.
+                </h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    CogniStream AI started as a small project to help students navigate complex topics. Today,
+                    it's a comprehensive ecosystem that leverages the latest Llama 3 models via Groq to provide instant,
+                    accurate, and deeply structured learning paths.
+                </p>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <div class="text-4xl font-bold text-indigo-600 mb-2">10k+</div>
+                        <div class="text-slate-500 font-medium">Active Learners</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-emerald-600 mb-2">50k+</div>
+                        <div class="text-slate-500 font-medium">Topics Mastered</div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div
+                    class="aspect-square bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-3xl transform rotate-3 absolute inset-0 opacity-20 blur-xl">
+                </div>
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1000"
+                    alt="Team collaborating"
+                    class="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-square">
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 md:p-16 shadow-xl border border-slate-100 mb-20">
+            <h2 class="text-3xl font-bold text-center mb-16">Why Choose CogniStream AI?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center space-y-4">
+                    <div
+                        class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Instant Feedback</h3>
+                    <p class="text-slate-500">No more waiting for office hours. Get your questions answered instantly,
+                        24/7.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div
+                        class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Personalized Paths</h3>
+                    <p class="text-slate-500">Every learner is unique. Our AI adapts to your pace and learning style.
+                    </p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div
+                        class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Premium Content</h3>
+                    <p class="text-slate-500">High-fidelity resources curated from across the global knowledge base.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center py-20">
+            <h2 class="text-3xl font-bold mb-8">Ready to start your journey?</h2>
+            <a href="{{ url_for('learn') }}"
+                class="btn-primary text-white px-10 py-4 rounded-full font-bold text-lg inline-flex items-center space-x-3">
+                <span>Try CogniStream AI Now</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

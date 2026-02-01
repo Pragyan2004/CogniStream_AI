@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - CogniStream AI{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Profile Header -->
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+            <!-- Avatar -->
+            <div class="text-center">
+                <div
+                    class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mb-4">
+                    {{ current_user.username[0].upper() if current_user.username else 'U' }}
+                </div>
+                <button class="text-blue-600 hover:text-blue-800 text-sm">
+                    <i class="fas fa-camera mr-1"></i> Change Photo
+                </button>
+            </div>
+
+            <!-- User Info -->
+            <div class="flex-1">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">{{ current_user.username }}</h1>
+                        <p class="text-gray-600">{{ current_user.email }}</p>
+                        <p class="text-gray-500 text-sm mt-2">
+                            <i class="fas fa-calendar-alt mr-1"></i>
+                            Member since {{ current_user.created_at.strftime('%B %d, %Y') }}
+                        </p>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-edit mr-2"></i> Edit Profile
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-600 mb-1">
+                            {{ saved_responses|length }}
+                        </div>
+                        <div class="text-gray-600">Saved Plans</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-green-600 mb-1">3</div>
+                        <div class="text-gray-600">Active Courses</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-600 mb-1">42</div>
+                        <div class="text-gray-600">Learning Hours</div>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-yellow-600 mb-1">A</div>
+                        <div class="text-gray-600">Learning Level</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Saved Responses -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Saved Learning Plans</h2>
+                    <div class="flex gap-2">
+                        <select class="p-2 border border-gray-300 rounded-lg">
+                            <option>All Topics</option>
+                            <option>Recent</option>
+                            <option>Most Viewed</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if saved_responses %}
+                <div class="space-y-4">
+                    {% for response in saved_responses %}
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">{{ response.topic }}</h3>
+                                <p class="text-sm text-gray-500">
+                                    <i
+                                        class="fas fa-{{ 'user-tie' if response.response_type == 'professor' else 'map-signs' if response.response_type == 'advisor' else 'book-open' if response.response_type == 'librarian' else 'hands-helping' }} mr-1"></i>
+                                    {{ response.response_type|title }} •
+                                    {{ response.created_at.strftime('%b %d, %Y') }}
+                                </p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="text-blue-600 hover:text-blue-800 view-response"
+                                    data-id="{{ response.id }}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-800 delete-response"
+                                    data-id="{{ response.id }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-gray-600 text-sm line-clamp-2">
+                            {{ response.content|striptags|truncate(200) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-8">
+                    <i class="fas fa-book text-4xl text-gray-300 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-600 mb-2">No Saved Plans Yet</h3>
+                    <p class="text-gray-500 mb-4">Start learning and save your favorite AI-generated plans here.</p>
+                    <a href="{{ url_for('learn') }}"
+                        class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-robot mr-2"></i> Try AI Assistant
+                    </a>
+                </div>
+                {% endif %}
+
+                <!-- Pagination -->
+                {% if saved_responses|length > 5 %}
+                <div class="mt-6 flex justify-center">
+                    <nav class="flex gap-2">
+                        <button class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg">Previous</button>
+                        <button class="px-3 py-2 bg-blue-600 text-white rounded-lg">1</button>
+                        <button class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg">2</button>
+                        <button class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg">Next</button>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Learning Goals -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">My Learning Goals</h2>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-green-500 pl-4 py-2">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-gray-800">Complete Python Course</h3>
+                                <p class="text-sm text-gray-600">Target: December 30, 2026</p>
+                            </div>
+                            <div class="w-24">
+                                <div class="h-2 bg-gray-200 rounded-full">
+                                    <div class="h-full bg-green-500 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">65%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4 py-2">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-gray-800">Learn Machine Learning Basics</h3>
+                                <p class="text-sm text-gray-600">Target: January 15, 2026</p>
+                            </div>
+                            <div class="w-24">
+                                <div class="h-2 bg-gray-200 rounded-full">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 30%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right">30%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-4 text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-plus mr-1"></i> Add New Goal
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Settings & Stats -->
+        <div>
+            <!-- Settings -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Settings</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-gray-800">Email Notifications</div>
+                            <div class="text-sm text-gray-600">Weekly learning updates</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-gray-800">AI Recommendations</div>
+                            <div class="text-sm text-gray-600">Personalized course suggestions</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-gray-800">Dark Mode</div>
+                            <div class="text-sm text-gray-600">Switch to dark theme</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Stats -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Learning Statistics</h2>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-600">This Week</span>
+                            <span class="font-medium">8h 30m</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 rounded-full">
+                            <div class="h-full bg-green-500 rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-600">This Month</span>
+                            <span class="font-medium">42h 15m</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 rounded-full">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-600">Total</span>
+                            <span class="font-medium">156h</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 rounded-full">
+                            <div class="h-full bg-purple-500 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+                <div class="space-y-3">
+                    <a href="{{ url_for('learn') }}"
+                        class="flex items-center p-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition">
+                        <i class="fas fa-robot mr-3"></i>
+                        <span>Ask AI Assistant</span>
+                    </a>
+                    <a href="{{ url_for('courses') }}"
+                        class="flex items-center p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition">
+                        <i class="fas fa-graduation-cap mr-3"></i>
+                        <span>Browse Courses</span>
+                    </a>
+                    <a href="{{ url_for('resources') }}"
+                        class="flex items-center p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition">
+                        <i class="fas fa-book mr-3"></i>
+                        <span>View Resources</span>
+                    </a>
+                    <button
+                        class="w-full flex items-center p-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-download mr-3"></i>
+                        <span>Export Data</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Viewing Response -->
+<div id="responseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
+    <div class="min-h-screen px-4 text-center">
+        <div class="inline-block w-full max-w-4xl my-8 text-left align-middle bg-white rounded-xl shadow-xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800" id="modalTitle"></h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="prose max-w-none" id="modalContent"></div>
+                <div class="mt-6 flex justify-end gap-4">
+                    <button onclick="closeModal()"
+                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                        Close
+                    </button>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // View saved response
+        document.querySelectorAll('.view-response').forEach(button => {
+            button.addEventListener('click', function () {
+                const responseId = this.dataset.id;
+                fetch(`/get_response/${responseId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('modalTitle').textContent = data.topic;
+                            document.getElementById('modalContent').innerHTML = data.content;
+                            document.getElementById('responseModal').classList.remove('hidden');
+                        }
+                    });
+            });
+        });
+
+        // Delete saved response
+        document.querySelectorAll('.delete-response').forEach(button => {
+            button.addEventListener('click', function () {
+                if (!confirm('Are you sure you want to delete this saved plan?')) return;
+
+                const responseId = this.dataset.id;
+                const card = this.closest('.border');
+
+                fetch(`/delete_response/${responseId}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            card.style.opacity = '0.5';
+                            setTimeout(() => {
+                                card.remove();
+                                // Show message if no more responses
+                                if (!document.querySelector('.border')) {
+                                    location.reload();
+                                }
+                            }, 300);
+                        }
+                    });
+            });
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('input[type="checkbox"][value*="dark"]');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('change', function () {
+                document.documentElement.classList.toggle('dark', this.checked);
+                localStorage.setItem('darkMode', this.checked);
+            });
+
+            // Check saved preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                darkModeToggle.checked = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+    });
+
+    function closeModal() {
+        document.getElementById('responseModal').classList.add('hidden');
+    }
+
+    // Line clamp CSS
+    const style = document.createElement('style');
+    style.textContent = `
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+`;
+    document.head.appendChild(style);
+</script>
+
+<style>
+    .dark body {
+        background-color: #1a202c;
+        color: #cbd5e0;
+    }
+
+    .dark .bg-white {
+        background-color: #2d3748;
+    }
+
+    .dark .text-gray-800 {
+        color: #cbd5e0;
+    }
+
+    .dark .text-gray-600 {
+        color: #a0aec0;
+    }
+
+    .dark .border-gray-200 {
+        border-color: #4a5568;
+    }
+</style>
+{% endblock %}

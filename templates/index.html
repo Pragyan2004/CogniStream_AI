@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}CogniStream AI - Master Any Topic{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative min-h-[90vh] flex items-center overflow-hidden pt-10">
+    <!-- Animated background elements -->
+    <div
+        class="absolute top-20 left-10 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob">
+    </div>
+    <div
+        class="absolute top-40 right-10 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000">
+    </div>
+    <div
+        class="absolute -bottom-20 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000">
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-10">
+                <div
+                    class="inline-flex items-center space-x-3 bg-white/50 backdrop-blur-md border border-indigo-100 px-5 py-2 rounded-full shadow-sm animate-fade-in">
+                    <span class="flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-sm font-bold text-slate-700 uppercase tracking-wider">The Future of Education is
+                        here</span>
+                </div>
+
+                <h1 class="text-6xl md:text-7xl font-extrabold leading-[1.1] text-slate-900 tracking-tight">
+                    Master Any Subject with <span class="gradient-text">Precision</span>
+                </h1>
+
+                <p class="text-xl text-slate-600 leading-relaxed max-w-xl">
+                    Experience personalized learning powered by state-of-the-art AI. Turn any curiosity into expertise
+                    with structured roadmaps, resources, and instant feedback.
+                </p>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="{{ url_for('learn') }}"
+                        class="btn-primary text-white px-8 py-4 rounded-2xl font-bold text-lg text-center flex items-center justify-center space-x-3 group">
+                        <span>Get Started Free</span>
+                        <i
+                            class="fas fa-chevron-right text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="{{ url_for('courses') }}"
+                        class="px-8 py-4 rounded-2xl border-2 border-slate-200 font-bold text-lg text-slate-700 hover:bg-slate-50 transition-colors text-center">
+                        Explore Courses
+                    </a>
+                </div>
+
+                <div class="flex items-center space-x-6 pt-4 text-slate-400 grayscale opacity-70">
+                    <div class="flex items-center space-x-2"><i class="fas fa-bolt"></i> <span
+                            class="text-xs font-bold uppercase tracking-tighter">Fast Inference</span></div>
+                    <div class="flex items-center space-x-2"><i class="fas fa-shield-cat"></i> <span
+                            class="text-xs font-bold uppercase tracking-tighter">Privacy First</span></div>
+                    <div class="flex items-center space-x-2"><i class="fas fa-globe"></i> <span
+                            class="text-xs font-bold uppercase tracking-tighter">Global Access</span></div>
+                </div>
+            </div>
+
+            <div class="relative lg:block hidden">
+                <div
+                    class="relative z-10 bg-white p-4 rounded-[2.5rem] shadow-2xl border border-slate-100 transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+                        alt="Cyberpunk learning interface" class="rounded-[2rem] w-full shadow-inner">
+                    <!-- Glass floating card -->
+                    <div
+                        class="absolute -bottom-8 -left-12 glass p-6 rounded-2xl shadow-xl w-64 animate-float border border-white/40">
+                        <div class="flex items-center space-x-4 mb-3">
+                            <div
+                                class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold">TOPIC MASTERED</p>
+                                <p class="text-sm font-bold text-slate-800">Quantum Physics</p>
+                            </div>
+                        </div>
+                        <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div class="w-3/4 h-full bg-emerald-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative rings -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 border-4 border-indigo-100 rounded-full opacity-50">
+                </div>
+                <div class="absolute -bottom-20 -right-20 w-80 h-80 border-4 border-emerald-50 rounded-full opacity-50">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Selection -->
+<section class="py-32 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-24">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Everything you need to <span
+                    class="gradient-text">Succeed</span></h2>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Harness the power of AI across multiple learning
+                dimensions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Prof Card -->
+            <div
+                class="group p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <div
+                    class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">The Professor</h3>
+                <p class="text-slate-500 group-hover:text-slate-400 transition-colors leading-relaxed">Structured
+                    knowledge bases and core concepts explained with academic precision.</p>
+            </div>
+
+            <!-- RoadCard -->
+            <div
+                class="group p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <div
+                    class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">The Roadmap</h3>
+                <p class="text-slate-500 group-hover:text-slate-400 transition-colors leading-relaxed">Step-by-step
+                    guides from beginner to mastery level for any topic you choose.</p>
+            </div>
+
+            <!-- Library Card -->
+            <div
+                class="group p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <div
+                    class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">The Librarian</h3>
+                <p class="text-slate-500 group-hover:text-slate-400 transition-colors leading-relaxed">Hand-picked
+                    external resources, courses, and documentation for deep diving.</p>
+            </div>
+
+            <!-- Practice Card -->
+            <div
+                class="group p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <div
+                    class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">The Workshop</h3>
+                <p class="text-slate-500 group-hover:text-slate-400 transition-colors leading-relaxed">Interactive
+                    exercises and real-world project ideas to solidify your skills.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative bg-slate-900 rounded-[3rem] p-12 md:p-24 overflow-hidden text-center">
+            <!-- Background glow -->
+            <div class="absolute -top-1/2 -left-1/2 w-full h-full bg-indigo-500/20 blur-[120px]"></div>
+
+            <div class="relative z-10 space-y-8">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white">Join the Learning Revolution</h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">Start your journey today and unlock your full
+                    potential with the most advanced AI teaching assistant.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="{{ url_for('learn') }}"
+                        class="btn-primary text-white px-10 py-5 rounded-2xl font-extrabold text-lg">Launch AI
+                        Assistant</a>
+                    <a href="{{ url_for('contact') }}"
+                        class="px-10 py-5 rounded-2xl border-2 border-white/20 text-white font-extrabold text-lg hover:border-white transition-colors">Contact
+                        Expert</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes blob {
+        0% {
+            transform: translate(0px, 0px) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0px, 0px) scale(1);
+        }
+    }
+
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fade-in-up 1s ease-out forwards;
+    }
+</style>
+{% endblock %}

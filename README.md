@@ -72,7 +72,7 @@ Integrated **YouTube modal player** for distraction-free learning.
 ### 🎥 About
 <img width="1448" height="924" alt="Screenshot 2026-02-01 211439" src="https://github.com/user-attachments/assets/fb7e9fee-26da-492c-b883-e139c0d16778" />
 
-### cContact
+### Contact
 <img width="1414" height="927" alt="Screenshot 2026-02-01 211454" src="https://github.com/user-attachments/assets/4d6846d4-fd34-49f6-a2da-58e6f1ab49c4" />
 
 ---
@@ -224,4 +224,5 @@ POST	/api/generate	AI API
 This project is licensed under the MIT License.
 
 ## 🏗️ Project Structure
+
 
